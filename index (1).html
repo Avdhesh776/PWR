@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>PWR - OG Pixel Console</title>
+  <meta name="description" content="PWR GOG V1: The OG Pixel Console. Classic gaming, pixel-perfect visuals, retro music and true arcade vibes. Plug in, power up, and play like it's 1989!">
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="PWR - OG Pixel Console">
+  <meta property="og:description" content="PWR GOG V1: The OG Pixel Console. Classic gaming, pixel-perfect visuals, retro music and true arcade vibes. Plug in, power up, and play like it's 1989!">
+  <meta property="og:image" content="https://i.imgur.com/rJY2D9Q.png">
+  <meta property="og:url" content="https://yourdomain.com/og-pixel-console">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PWR - OG Pixel Console">
+  <meta name="twitter:description" content="PWR GOG V1: The OG Pixel Console. Classic gaming, pixel-perfect visuals, retro music and true arcade vibes. Plug in, power up, and play like it's 1989!">
+  <meta name="twitter:image" content="https://i.imgur.com/rJY2D9Q.png">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"/>
+  <style>
+    html, body {
+      margin: 0; padding: 0; min-height: 100vh;
+      background: #191919;
+      color: #ffe07b;
+      font-family: 'Press Start 2P', monospace;
+      image-rendering: pixelated;
+      letter-spacing: 1.15px;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+    body {
+      background-image:
+        repeating-linear-gradient(0deg, #232323 0px, #191919 2px, #191919 6px, #232323 8px),
+        repeating-linear-gradient(90deg, #232323 0px, #232323 8px, #191919 12px);
+      background-color: #191919;
+    }
+    .crt {
+      position: fixed; left:0; top:0; width:100vw; height:100vh; z-index:10000;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      opacity: 0.22;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.14) 0px,
+        rgba(255,255,255,0.06) 2px,
+        transparent 7px,
+        transparent 11px
+      );
+      animation: scanline 1.2s linear infinite;
+    }
+    @keyframes scanline {to {background-position-y: 11px;}}
+    #starfield {
+      position: fixed; left:0; top:0; width:100vw; height:100vh; z-index:0;
+      pointer-events:none; opacity:0.18;
+      image-rendering: pixelated;
+    }
+    header {
+      width: 100%;
+      background: #111;
+      border-bottom: 4px solid #ffe07b;
+      padding: 18px 0 12px 0;
+      text-align: center;
+      box-shadow: 0 2px 0px #000, 0 4px 0 #b89d53;
+      position: sticky; top: 0; z-index: 2;
+    }
+    .logo {
+      color: #ffe07b;
+      font-size: 2.5rem;
+      letter-spacing: 7px;
+      text-shadow: 0 2px #b89d53, 2px 4px #000;
+      margin-bottom: 8px;
+      display: inline-block;
+      filter: contrast(1.2) drop-shadow(0 0 2px #ffe07b);
+      user-select: none;
+      animation: logo-og 2.8s linear infinite;
+    }
+    @keyframes logo-og {
+      0%, 100% { color: #ffe07b;}
+      20%{ color: #fff;}
+      50%{ color: #b89d53;}
+      70%{ color: #ffe07b;}
+    }
+    .og-bar {
+      display: inline-block;
+      background: #ffef7b;
+      color: #191919;
+      font-size: 0.7rem;
+      padding: 7px 22px 7px 15px;
+      border: 2px solid #ffe07b;
+      margin: 0 0 12px 0;
+      box-shadow: 2px 2px 0 #ffe07b, 4px 4px 0 #b89d53;
+      letter-spacing: 2px;
+      animation: blink-bar 1s steps(1) infinite;
+      text-shadow: 1px 1px #fff8;
+    }
+    @keyframes blink-bar {0%,100%{opacity:1;} 50%{opacity:0.2;}}
+    nav {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.3em;
+      flex-wrap: wrap;
+    }
+    nav a {
+      color: #ffe07b;
+      text-decoration: none;
+      padding: 6px 18px;
+      border: 2px solid #b89d53;
+      background: #232323;
+      border-radius: 0;
+      font-family: inherit;
+      box-shadow: 2px 2px 0 #fff5, 4px 4px 0 #b89d53;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      position: relative;
+      text-shadow: 2px 2px #000;
+    }
+    nav a:hover, nav a:focus {
+      background: #ffe07b;
+      color: #232323;
+      border-color: #ffe07b;
+      text-shadow: none;
+      box-shadow: 0 0 0 #fff5, 2px 2px 0 #b89d53;
+    }
+    main {
+      max-width: 880px;
+      margin: 40px auto 0 auto;
+      background: #232323;
+      border: 7px solid #ffe07b;
+      border-radius: 0.5rem;
+      box-shadow: 10px 10px 0 #000, 0 0 8px #ffe07b inset;
+      padding: 32px 18px 50px 18px;
+      position: relative;
+      z-index: 1;
+    }
+    .pixel-hero {
+      text-align: center;
+      margin-bottom: 44px;
+      position: relative;
+    }
+    /* .sprite-hero { ... } and @keyframes sprite-walk removed */
+    .pixel-console {
+      margin: 0 auto 18px auto;
+      display: block;
+      width: 180px;
+      image-rendering: pixelated;
+      filter: drop-shadow(0 2px 0 #b89d53) drop-shadow(0 0 8px #ffe07b88);
+    }
+    .pixel-title {
+      font-size: 2.3rem;
+      margin: 15px 0 14px 0;
+      color: #ffe07b;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px #b89d53, 3px 3px #000;
+      font-family: 'Press Start 2P', monospace;
+    }
+    .pixel-tagline {
+      font-size: 1.1rem;
+      color: #b89d53;
+      margin-bottom: 18px;
+      text-shadow: 1px 1px #000;
+    }
+    .pixel-hero p {
+      max-width: 600px;
+      margin: 0 auto 16px auto;
+      color: #ffe07b;
+      background: #111c;
+      padding: 10px 10px 6px 10px;
+      border-radius: 0.2rem;
+      border: 2px solid #ffe07b;
+      box-shadow: 2px 2px 0 #b89d53;
+      font-size: 1.02rem;
+      text-shadow: 1px 1px #000;
+    }
+    .start-btn {
+      font-size: 1.12rem;
+      font-family: inherit;
+      background: #ffe07b;
+      color: #232323;
+      border: 3px solid #b89d53;
+      padding: 14px 36px;
+      margin: 16px 0 0 0;
+      cursor: pointer;
+      border-radius: 0;
+      font-weight: bold;
+      box-shadow: 2px 2px 0 #fff5, 4px 4px 0 #b89d53;
+      text-shadow: 1px 1px #fff8;
+      letter-spacing: 2px;
+      position: relative;
+      outline: 2px solid #232323;
+      transition: background 0.12s, color 0.12s, box-shadow 0.15s;
+      z-index:2;
+    }
+    .start-btn:active {
+      background: #b89d53;
+      color: #ffe07b;
+      box-shadow: 0 0 0 #fff5, 2px 2px 0 #b89d53;
+    }
+    .section-title {
+      color: #ffe07b;
+      font-size: 1.65rem;
+      margin: 54px 0 18px 0;
+      text-align: center;
+      text-shadow: 2px 2px #b89d53, 3px 3px #000;
+      letter-spacing: 2px;
+      border-bottom: 2px dashed #ffe07b;
+      padding-bottom: 8px;
+      font-family: 'Press Start 2P', monospace;
+    }
+    .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 28px; margin: 30px 0 18px 0;}
+    .feature-card {
+      background: #232323;
+      border: 3px solid #b89d53;
+      box-shadow: 3px 3px 0 #ffe07b, 6px 6px 0 #000;
+      padding: 22px 16px;
+      text-align: left;
+      position: relative;
+    }
+    .feature-card h3 { color: #ffe07b; font-size: 1.09rem; margin-bottom: 12px; font-family: inherit; text-shadow: 1px 1px #b89d53, 2px 2px #000;}
+    .feature-icon { font-size: 1.25rem; margin-right: 10px; color: #b89d53; filter: drop-shadow(0 0 2px #ffe07b);}
+    .feature-card p { color: #ffe07b; font-size: 1.01rem; margin: 0; text-shadow: 1px 1px #131313cc;}
+    .specs-list { margin: 30px 0 16px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 18px;}
+    .spec-card { background: #191919; border: 2px dashed #ffe07b; padding: 10px 18px 8px 18px; color: #ffe07b; text-shadow: 1px 1px #000; border-radius: 0.2rem; font-size: 0.97rem;}
+    .spec-card h4 { color: #ffe07b; font-size: 1.09rem; margin-bottom: 6px; font-family: inherit; text-shadow: 1px 1px #b89d53;}
+    .spec-card ul { margin: 0; padding-left: 18px;}
+    .emulator-list { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 28px; margin: 30px 0 10px 0;}
+    .emulator-card { background: #191919; border: 2px solid #b89d53; box-shadow: 2px 2px 0 #ffe07b, 4px 4px 0 #000; padding: 16px 13px 10px 13px; color: #ffe07b; font-size: 1.01rem; text-shadow: 1px 1px #000;}
+    .testimonial-section { margin-top: 44px; background: #232323; padding: 28px 0 28px 0; border: 3px dotted #ffe07b; box-shadow: 3px 3px 0 #b89d53, 6px 6px 0 #000; border-radius: 0.2rem;}
+    .testimonials { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 24px; max-width: 800px; margin: 0 auto; justify-items: center;}
+    .testimonial-card { background: #191919; border: 2px solid #b89d53; box-shadow: 2px 2px 0 #ffe07b, 3px 3px 0 #000; border-radius: 0; padding: 20px 18px 10px 18px; color: #ffe07b; font-family: 'Press Start 2P', monospace; font-size: 0.93rem; text-shadow: 1px 1px #000; position: relative; min-height: 80px;}
+    .testimonial-card:before { content: "★"; position: absolute; top: 13px; right: 18px; font-size: 1.3rem; color: #ffe07b99; text-shadow: 1px 1px #b89d53;}
+    .testimonial-author { margin-top: 10px; color: #b89d53; font-size: 0.92rem; font-family: inherit; text-align: right;}
+    .about { background: #191919; border: 2px solid #ffe07b; border-radius: 0.2rem; box-shadow: 2px 2px 0 #b89d53, 4px 4px 0 #000; padding: 36px 18px 28px 18px; color: #ffe07b; text-align: center; font-size: 1.01rem; margin: 42px 0 0 0;}
+    .cta-section { background: #ffe07b; color: #232323; text-align: center; padding: 38px 12px 60px 12px; margin: 36px 0 0 0; border: 4px solid #b89d53; border-radius: 0.2rem; box-shadow: 2px 2px 0 #fff5, 4px 4px 0 #b89d53; font-family: 'Press Start 2P', monospace;}
+    .cta-section h2 { color: #232323; margin-bottom: 18px; font-family: inherit; }
+    .cta-section p { color: #1d1d1d; }
+    .faq-list { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 26px 0 0 0;}
+    .faq-item { background: #232323; border: 2px dashed #ffe07b; padding: 16px 22px 12px 22px; border-radius: 0; font-size: 0.98rem; color: #ffe07b; text-shadow: 1px 1px #000;}
+    .faq-item h4 { color: #ffe07b; font-size: 0.98rem; margin: 0 0 8px 0; font-family: inherit; text-shadow: 1px 1px #b89d53;}
+    .faq-item p { margin: 0; color: #ffe07b; text-shadow: 1px 1px #000;}
+    footer { padding: 22px 0 12px 0; text-align: center; background: #111; color: #ffe07b; font-family: 'Press Start 2P', monospace; font-size: 0.97rem; border-top: 4px solid #ffe07b; margin-top: 60px; box-shadow: 0 -2px 0 #000, 0 -4px 0 #b89d53; letter-spacing: 1.7px;}
+    .footer-bar { margin-top: 12px; color: #b89d53; font-size: 0.88rem; font-family: inherit;}
+    @media (max-width: 900px) {
+      .features-grid, .specs-list, .emulator-list, .testimonials, .faq-list { grid-template-columns: 1fr;}
+      main {padding: 18px 2vw 26px 2vw;}
+      .logo {font-size: 2rem;}
+      .pixel-title {font-size: 1.3rem;}
+      .pixel-hero p {font-size: 0.89rem;}
+    }
+    @media (max-width: 500px) {
+      .pixel-title {font-size: 1rem;}
+      .logo {font-size: 1.3rem;}
+      nav {gap: 0.2em;}
+      .section-title {font-size: 1.19rem;}
+    }
+    .buy-modal-bg {
+      display: none;
+      position: fixed; top:0; left:0; width:100vw; height:100vh;
+      background: rgba(30,24,8,0.82);
+      z-index: 10001;
+    }
+    .buy-modal {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      background: #191919;
+      border: 4px solid #b89d53;
+      color: #ffe07b;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 1.05rem;
+      padding: 36px 32px 22px 32px;
+      border-radius: 0.22rem;
+      box-shadow: 0 0 0 8px #b89d53, 0 0 22px #ffe07b77 inset;
+      text-align: center;
+      max-width: 95vw;
+      min-width: 220px;
+      z-index: 10002;
+    }
+    .buy-modal .modal-btn {
+      margin-top: 26px;
+      font-family: inherit;
+      font-size: 1rem;
+      background: #ffe07b;
+      color: #232323;
+      border: 2px solid #b89d53;
+      padding: 12px 28px;
+      border-radius: 0;
+      box-shadow: 2px 2px 0 #fff5, 4px 4px 0 #b89d53;
+      cursor: pointer;
+      letter-spacing: 1.6px;
+      transition: background 0.12s, color 0.12s;
+    }
+    .buy-modal .modal-btn:active {
+      background: #b89d53;
+      color: #ffe07b;
+      box-shadow: 0 0 0 #fff5, 2px 2px 0 #b89d53;
+    }
+    .buy-modal .modal-btn:focus {outline: 2px solid #232323;}
+  </style>
+</head>
+<body>
+  <canvas id="starfield"></canvas>
+  <div class="crt"></div>
+  <header>
+    <div class="logo">PWR</div>
+    <div class="og-bar">THE OG CONSOLE EXPERIENCE</div>
+    <nav>
+      <a href="#features">FEATURES</a>
+      <a href="#specs">SPECS</a>
+      <a href="#emulators">EMULATORS</a>
+      <a href="#reviews">REVIEWS</a>
+      <a href="#about">ABOUT</a>
+      <a href="#faq">FAQ</a>
+      <a href="#buy">BUY</a>
+    </nav>
+  </header>
+  <main>
+    <section class="pixel-hero">
+      <!-- OG Pixel Hero removed -->
+      <svg class="pixel-console" viewBox="0 0 80 100">
+        <rect x="8" y="8" width="64" height="84" rx="10" fill="#a09b77" stroke="#b89d53" stroke-width="3"/>
+        <rect x="19" y="21" width="42" height="32" rx="2" fill="#282e33" stroke="#ffe07b" stroke-width="2"/>
+        <rect x="19" y="21" width="42" height="11" fill="#3f4451" opacity="0.7"/>
+        <rect x="19" y="42" width="42" height="11" fill="#3f4451" opacity="0.7"/>
+        <circle cx="24" cy="75" r="4" fill="#232323" stroke="#ffe07b" stroke-width="1"/>
+        <circle cx="56" cy="75" r="4" fill="#232323" stroke="#ffe07b" stroke-width="1"/>
+        <rect x="37" y="80" width="6" height="2" fill="#b89d53"/>
+        <rect x="39" y="78" width="2" height="6" fill="#b89d53"/>
+        <rect x="32" y="90" width="16" height="3" rx="1" fill="#ffe07b" opacity="0.7"/>
+      </svg>
+      <div class="pixel-title">GOG V1 <span style="font-size:0.7em;">OG PIXEL CONSOLE</span></div>
+      <div class="pixel-tagline">The Original. The Legend. The Arcade.</div>
+      <p>
+        The OG console is back and better than ever.<br>
+        Pure pixel power, true retro chiptune music, and authentic arcade feels.<br>
+        Plug in, power up, and play like it's 1989!
+      </p>
+      <a href="#buy">
+        <button class="start-btn">PRESS START</button>
+      </a>
+    </section>
+    <div class="section-title" id="features">FEATURES</div>
+    <div class="features-grid">
+      <div class="feature-card"><h3><span class="feature-icon">🟪</span>PIXEL-PERFECT VISUALS</h3><p>Recreated to match the OG look, with scanlines and real 8-bit joy.</p></div>
+      <div class="feature-card"><h3><span class="feature-icon">🕹️</span>ARCADE LIBRARY</h3><p>NES, SNES, GameBoy, Genesis, Atari. Only the classics. Only the best.</p></div>
+      <div class="feature-card"><h3><span class="feature-icon">💾</span>SAVE ANYWHERE</h3><p>Pause your quest, save your progress, never lose a high score again.</p></div>
+      <div class="feature-card"><h3><span class="feature-icon">🔊</span>RETRO MUSIC</h3><p>Chiptune soundtrack and sound FX for full nostalgia immersion.</p></div>
+    </div>
+    <div class="section-title" id="specs">TECHNICAL SPECS</div>
+    <div class="specs-list">
+      <div class="spec-card"><h4>HARDWARE</h4><ul><li>Pixel-accurate 320x240 video</li><li>Quad-core ARM CPU</li><li>512MB RAM</li><li>MicroSD (32GB+)</li></ul></div>
+      <div class="spec-card"><h4>VIDEO/AUDIO</h4><ul><li>Composite AV & HDMI</li><li>Chiptune sound</li><li>CRT scanline overlay</li></ul></div>
+      <div class="spec-card"><h4>CONTROLS</h4><ul><li>USB & original controller ports</li><li>4-button D-pad & Start/Select</li></ul></div>
+      <div class="spec-card"><h4>SOFTWARE</h4><ul><li>OG-style pixel art menu</li><li>Save/load state support</li></ul></div>
+    </div>
+    <div class="section-title" id="emulators">SUPPORTED SYSTEMS</div>
+    <div class="emulator-list">
+      <div class="emulator-card"><b>NES / Famicom</b><div>OG 8-bit action.</div></div>
+      <div class="emulator-card"><b>Super Nintendo</b><div>Legendary 16-bit.</div></div>
+      <div class="emulator-card"><b>Game Boy + Color</b><div>Green LCD and color!</div></div>
+      <div class="emulator-card"><b>Sega Genesis</b><div>Blast processing for real.</div></div>
+      <div class="emulator-card"><b>Atari 2600</b><div>True challenge, true OG.</div></div>
+      <div class="emulator-card"><b>More…</b><div>Regular OG updates.</div></div>
+    </div>
+    <section class="testimonial-section" id="reviews">
+      <div class="section-title">REVIEWS</div>
+      <div class="testimonials">
+        <div class="testimonial-card">
+          "The OG vibes are real. This is what gaming was meant to be!"
+          <div class="testimonial-author">- Jamie B.</div>
+        </div>
+        <div class="testimonial-card">
+          "My childhood, in a box. The music and visuals are spot on."
+          <div class="testimonial-author">- Priya S.</div>
+        </div>
+        <div class="testimonial-card">
+          "Tetris, Mario, Sonic...all the legends. It's perfect."
+          <div class="testimonial-author">- Chris T.</div>
+        </div>
+        <div class="testimonial-card">
+          "No microtransactions. Just games, friends, and fun."
+          <div class="testimonial-author">- Maddy R.</div>
+        </div>
+      </div>
+    </section>
+    <section class="about" id="about">
+      <div class="section-title">ABOUT</div>
+      <p>
+        <b>PWR | Play With Rage</b> brings back the OG arcade spirit.<br>
+        We stand for pixel art, chiptune music, and the thrill of the high score.<br>
+        <span style="color:#ffe07b;">Be OG. Play OG. Game on.</span>
+      </p>
+    </section>
+    <section class="cta-section" id="buy">
+      <h2>READY TO GO OG?</h2>
+      <p>
+        Own the PWR GOG V1 OG Pixel Console.<br>
+        <b>Plug in. Power up. PLAY OG!</b>
+      </p>
+      <button class="start-btn buy-btn">BUY NOW</button>
+      <div class="footer-bar">No subscriptions. No DLC. 100% OG.</div>
+    </section>
+    <div class="section-title" id="faq">FAQ</div>
+    <div class="faq-list">
+      <div class="faq-item"><h4>Q: Are games included?</h4><p>A: Only open-source OG classics. Add your own for more!</p></div>
+      <div class="faq-item"><h4>Q: OG controller support?</h4><p>A: Yes! Plug in USB or supported OG pads for real play.</p></div>
+      <div class="faq-item"><h4>Q: CRT support?</h4><p>A: Yes, composite AV for true OG screens.</p></div>
+      <div class="faq-item"><h4>Q: Save progress?</h4><p>A: Yes, save/load at any time. Keep your OG high scores!</p></div>
+    </div>
+  </main>
+  <footer>
+    PWR &copy; 2025 | Play With Rage | The OG Pixel Console
+    <div class="footer-bar">[OG SELECT] to continue</div>
+  </footer>
+  <div class="buy-modal-bg" id="buyModalBg">
+    <div class="buy-modal">
+      <div style="font-size:1.2em; margin-bottom:1.3em;">PIXEL STORE</div>
+      <div>Thanks for your OG spirit!<br>Consoles are currently <span style="color:#ffe07b;">SOLD OUT</span>.<br><br>Stay tuned for more OG drops!</div>
+      <button class="modal-btn" onclick="closeModal()">OK</button>
+    </div>
+  </div>
+  <audio id="sfx-beep" src="https://cdn.pixabay.com/audio/2022/03/15/audio_113bfa7c7b.mp3"></audio>
+  <!-- OG Background Music (autoplay, loop, hidden) -->
+  <audio id="bgm" loop autoplay preload="auto" style="display:none">
+    <source src="https://cdn.pixabay.com/audio/2022/11/16/audio_12b2b3bba8.mp3" type="audio/mp3"/>
+  </audio>
+  <script>
+    // OG Starfield
+    const canvas = document.getElementById('starfield');
+    function resizeStarfield() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    let fieldStars = [];
+    function initStarfield() {
+      resizeStarfield();
+      fieldStars = [];
+      for(let i=0;i<100;i++){
+        fieldStars.push({
+          x: Math.floor(Math.random()*canvas.width),
+          y: Math.floor(Math.random()*canvas.height),
+          s: Math.random() < 0.6 ? 1 : 2,
+          d: Math.random()*0.25+0.1
+        });
+      }
+    }
+    function drawStarfield() {
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle = "#fff";
+      for(const star of fieldStars) {
+        ctx.globalAlpha = star.s === 2 ? 0.8 : 0.33 + Math.random()*0.15;
+        ctx.fillRect(star.x, star.y, star.s, star.s);
+        star.x += star.d;
+        if (star.x > canvas.width) { star.x = 0; star.y = Math.floor(Math.random()*canvas.height);}
+      }
+      requestAnimationFrame(drawStarfield);
+    }
+    window.addEventListener('resize', resizeStarfield);
+    initStarfield(); drawStarfield();
+    function pixelJitter(selector, intensity = 2) {
+      const el = document.querySelector(selector);
+      if (!el) return;
+      setInterval(() => {
+        el.style.transform =
+          "translate(" +
+          (Math.random() - 0.5) * intensity +
+          "px," +
+          (Math.random() - 0.5) * intensity +
+          "px)";
+      }, 120);
+    }
+    pixelJitter(".logo", 1.6);
+    pixelJitter(".pixel-title", 1.1);
+    setInterval(() => {
+      document.querySelector('.crt').style.opacity = 0.13 + Math.random() * 0.13;
+    }, 120);
+    function playBeep() {
+      const sfx = document.getElementById('sfx-beep');
+      if(sfx) {
+        sfx.currentTime = 0; sfx.volume=0.2;
+        sfx.play();
+      }
+    }
+    document.querySelectorAll('nav a, .start-btn, .modal-btn').forEach(btn => {
+      btn.addEventListener('mouseenter', playBeep);
+    });
+    document.querySelectorAll('.buy-btn').forEach(btn => {
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        playBeep();
+        openModal();
+      });
+    });
+    function openModal() {
+      document.getElementById('buyModalBg').style.display='block';
+      setTimeout(()=>{document.querySelector('.modal-btn').focus()},50);
+    }
+    function closeModal() {
+      document.getElementById('buyModalBg').style.display='none';
+    }
+    window.addEventListener('keydown', function(evt){
+      if(document.getElementById('buyModalBg').style.display==='block' &&
+         (evt.keyCode===13||evt.keyCode===27)) closeModal();
+    });
+    document.getElementById('buyModalBg').addEventListener('click', function(evt){
+      if(evt.target === this) closeModal();
+    });
+    document.querySelectorAll('.start-btn').forEach(btn => {
+      btn.addEventListener('click', function(e){
+        try {
+          if (window.AudioContext) {
+            let ctx = new AudioContext();
+            let o = ctx.createOscillator(), g = ctx.createGain();
+            o.type = "square"; o.frequency.value = 370; o.connect(g);
+            g.connect(ctx.destination); g.gain.value = 0.12;
+            o.start();
+            setTimeout(()=>{o.frequency.value=220}, 55);
+            setTimeout(()=>{g.gain.value=0.04}, 110);
+            setTimeout(()=>{g.gain.value=0.0;o.stop()}, 200);
+          }
+        } catch(e){}
+      });
+    });
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', function(e){
+        const hash = this.getAttribute('href');
+        if(hash && hash.startsWith("#") && document.querySelector(hash)){
+          e.preventDefault();
+          document.querySelector(hash).scrollIntoView({behavior:'smooth'});
+        }
+      });
+    });
+    // --- BACKGROUND MUSIC AUTOPLAY OG ---
+    // Try to play on load and on first click/tap for mobile browsers
+    const bgm = document.getElementById('bgm');
+    function tryPlayBGM() {
+      if (bgm.paused) {
+        bgm.volume = 0.14;
+        const playPromise = bgm.play();
+        if(playPromise && playPromise.catch){
+          playPromise.catch(()=>{});
+        }
+      }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      tryPlayBGM();
+    });
+    window.addEventListener('click', tryPlayBGM, { once: true });
+    window.addEventListener('touchstart', tryPlayBGM, { once: true });
+  </script>
+</body>
+</html>
